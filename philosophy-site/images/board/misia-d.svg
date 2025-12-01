@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" role="img" aria-label="MD avatar">
+  <defs>
+    <linearGradient id="grad-misia-d" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ede9fe"/>
+      <stop offset="100%" stop-color="#ddd6fe"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="600" height="750" rx="48" fill="url(#grad-misia-d)"/>
+  <rect x="18" y="18" width="564" height="714" rx="42" fill="rgba(255,255,255,0.06)"/>
+  <text x="50%" y="52%" text-anchor="middle" fill="#5b21b6" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="220" font-weight="700">MD</text>
+</svg>
