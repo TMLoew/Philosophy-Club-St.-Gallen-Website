@@ -297,6 +297,15 @@ h1, h2, h3, h4 {
   color: #cbd5f5;
 }
 
+.footer-text a {
+  color: #e5e7eb;
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
+
 .footer-links a {
   color: #cbd5f5;
   display: block;
@@ -315,21 +324,21 @@ h1, h2, h3, h4 {
 }
 
 .footer-icon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: transform 0.12s ease, background 0.12s ease;
-  color: #fff;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+  transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
+  color: #e5e7eb;
 }
 
 .footer-icon:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 
 .footer-smallprint {
