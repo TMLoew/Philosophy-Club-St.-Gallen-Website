@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 250" role="img" aria-label="Philosophy Club St. Gallen logo">
+  <style>
+    .logo-text { font-family: "Cormorant Garamond", Georgia, serif; fill: #0b2f5e; }
+  </style>
+  <rect width="900" height="250" fill="none"/>
+  <text x="70" y="185" font-size="220" class="logo-text">Φ</text>
+  <text x="230" y="175" font-size="80" class="logo-text">ilosophy Club St. Gallen</text>
+</svg>
