@@ -21,3 +21,4 @@ What it is: a simple HTML/CSS/JS site hosted on Netlify, code in GitHub. No data
 ## Social links
 - Instagram: https://www.instagram.com/philosophyclub.sg/
 - LinkedIn: https://www.linkedin.com/company/philosophy-club/posts/?feedView=all
+- Netlify: https://app.netlify.com/projects/philosophyclubstgallen/overview
