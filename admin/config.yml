@@ -1,0 +1,29 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    file: "data/events.json"
+    description: "Upcoming and featured events shown on the homepage."
+    format: "json"
+    fields:
+      - label: "Events"
+        name: "events"
+        widget: "list"
+        allow_add: true
+        summary: "{{fields.title}} – {{fields.date}}"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
+          - { label: "Time", name: "time", widget: "string", required: false }
+          - { label: "Location", name: "location", widget: "string", required: false }
+          - { label: "Link", name: "url", widget: "string", required: false }
+          - { label: "Description", name: "description", widget: "text", required: false }
