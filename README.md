@@ -60,3 +60,4 @@ Point your domain’s DNS (CNAME/ALIAS) to your host (e.g., `your-site.netlify.a
 ## Social links
 - Instagram: https://www.instagram.com/philosophyclub.sg/
 - LinkedIn: https://www.linkedin.com/company/philosophy-club/posts/?feedView=all
+- Netlify: https://app.netlify.com/projects/philosophyclubstgallen/overview
