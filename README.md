@@ -40,7 +40,7 @@ Static site for the Philosophy Club St. Gallen with former boards, current boa
   1) In Netlify, enable Identity + Git Gateway.
   2) Invite editors by email; they log in at `/admin/`.
   3) Events collection edits `data/events.json`.
-- Instagram feed: embedded via LightWidget on the homepage. Widget iframe is set in `index.html`. If you change the widget, replace the script + iframe URL.
+- Instagram feed: currently shown as links (UniClubs + Instagram) because LightWidget’s free embed requires HTTP. You can switch to a paid HTTPS-capable widget later by updating the `index.html` section.
 
 ## Deploy
 - Netlify: connect the GitHub repo, no build command needed, publish dir `.`. Functions auto-deploy from `netlify/functions`.
