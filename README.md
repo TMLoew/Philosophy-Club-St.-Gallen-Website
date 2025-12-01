@@ -15,11 +15,36 @@ Static site for the Philosophy Club St. Gallen with former boards, current boa
    ```
    Then open http://localhost:8000 in your browser.
 
-## Editing content
-- **Events**: edit `data/events.json` (used to render the events section on the homepage).
-- **Board pages**: static HTML under `about-us.html` and `board-*.html`. Images live in `images/board/`.
-- **Styles**: `css/style.css`
-- **Scripts**: `js/site.js`
+## How the site is managed (new board members, read this)
+- The site is a static HTML/CSS/JS project. No database.
+- Editing happens via GitHub and Netlify (free tiers are fine).
+- Content sources:
+  - **Events**: auto-fetched from UniClubs via a Netlify Function. If the function fails, it falls back to `data/events.json`. You can edit `data/events.json` manually if needed.
+  - **Current board**: `about-us.html` and images in `images/board/`. Replace images and update names/roles directly in the HTML.
+  - **Former boards**: `board-*.html` files and their images in `images/board/`.
+  - **Styles**: `css/style.css`
+  - **Scripts**: `js/site.js`
+- Admin UI (Decap CMS) can be used for events via `/admin/` when Netlify Identity + Git Gateway are enabled.
+
+## Editing content (manual)
+- **Events (manual fallback)**: edit `data/events.json`; the homepage renders from it if the Netlify Function fails.
+- **Board pages**: edit `about-us.html` (current board) and `board-*.html` (former boards). Update images in `images/board/`.
+- **Text/links**: edit the relevant HTML files. Social links are in the footer of each page.
+- **Design**: adjust `css/style.css`. JS behaviors live in `js/site.js`.
+
+## Netlify integration
+- `/.netlify/functions/uniclubs-events` scrapes UniClubs and returns `{ events: [...] }`.
+- `js/site.js` tries the function first, then falls back to `data/events.json`.
+- `netlify.toml` sets `publish="."`, no build step, functions in `netlify/functions`.
+- To enable `/admin/` (Decap CMS):
+  1) In Netlify, enable Identity + Git Gateway.
+  2) Invite editors by email; they log in at `/admin/`.
+  3) Events collection edits `data/events.json`.
+- Instagram feed: embedded via LightWidget on the homepage. Widget iframe is set in `index.html`. If you change the widget, replace the script + iframe URL.
+
+## Deploy
+- Netlify: connect the GitHub repo, no build command needed, publish dir `.`. Functions auto-deploy from `netlify/functions`.
+- GitHub Pages: works for the static site, but Netlify Functions won’t run there (events would fall back to `data/events.json` only).
 
 ## Admin (Netlify + Decap CMS)
 - `/admin/` is wired for Decap CMS with `git-gateway` on the `main` branch.
