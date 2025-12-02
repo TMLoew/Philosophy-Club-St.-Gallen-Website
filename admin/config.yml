@@ -11,37 +11,43 @@ collections:
   - name: "events"
     label: "Events"
     label_singular: "Event"
-    file: "data/events.json"
-    description: "Upcoming and featured events shown on the homepage."
-    format: "json"
-    fields:
+    files:
       - label: "Events"
         name: "events"
-        widget: "list"
-        allow_add: true
-        summary: "{{fields.title}} – {{fields.date}}"
+        file: "data/events.json"
+        description: "Upcoming and featured events shown on the homepage."
+        format: "json"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
-          - { label: "Time", name: "time", widget: "string", required: false }
-          - { label: "Location", name: "location", widget: "string", required: false }
-          - { label: "Link", name: "url", widget: "string", required: false }
-          - { label: "Description", name: "description", widget: "text", required: false }
+          - label: "Events"
+            name: "events"
+            widget: "list"
+            allow_add: true
+            summary: "{{fields.title}} – {{fields.date}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
+              - { label: "Time", name: "time", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Link", name: "url", widget: "string", required: false }
+              - { label: "Description", name: "description", widget: "text", required: false }
   - name: "posts"
     label: "Posts"
     label_singular: "Post"
-    file: "data/posts.json"
-    description: "News or blog posts shown on the site."
-    format: "json"
-    fields:
+    files:
       - label: "Posts"
         name: "posts"
-        widget: "list"
-        allow_add: true
-        summary: "{{fields.title}} – {{fields.date}}"
+        file: "data/posts.json"
+        description: "News or blog posts shown on the site."
+        format: "json"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
-          - { label: "Summary", name: "summary", widget: "text", required: false }
-          - { label: "Link", name: "url", widget: "string", required: false }
-          - { label: "Body", name: "body", widget: "markdown", required: false }
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            allow_add: true
+            summary: "{{fields.title}} – {{fields.date}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
+              - { label: "Summary", name: "summary", widget: "text", required: false }
+              - { label: "Link", name: "url", widget: "string", required: false }
+              - { label: "Body", name: "body", widget: "markdown", required: false }

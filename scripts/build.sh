@@ -8,8 +8,13 @@ ADMIN_USER="${ADMIN_USER:-p80pe}"
 ADMIN_PASSWORD="${ADMIN_PASSWORD:-}"
 
 if [[ -z "${ADMIN_PASSWORD}" ]]; then
-  echo "ERROR: ADMIN_PASSWORD is not set. Set it in Netlify environment to protect /admin." >&2
-  exit 1
+  if [[ "${NETLIFY:-false}" == "true" ]]; then
+    echo "ERROR: ADMIN_PASSWORD is not set. Set it in Netlify environment to protect /admin." >&2
+    exit 1
+  else
+    ADMIN_PASSWORD="dev-password"
+    echo "WARNING: ADMIN_PASSWORD not set. Using dev placeholder. Set it in Netlify env for real deploys." >&2
+  fi
 fi
 
 cat > _headers <<EOF
