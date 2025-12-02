@@ -81,16 +81,11 @@
     const loadEvents = (force = false) => {
       const bust = force ? `?bust=${Date.now()}` : '';
       const options = force ? { cache: 'no-store' } : {};
-      return fetch(`/.netlify/functions/uniclubs-events${bust}`, options)
-        .then((res) => res.ok ? res.json() : Promise.reject())
+      return fetch(`data/events.json${bust}`, options)
+        .then((res) => res.json())
         .then((data) => render(Array.isArray(data.events) ? data.events : []))
         .catch(() => {
-          fetch('data/events.json')
-            .then((res) => res.json())
-            .then((data) => render(Array.isArray(data.events) ? data.events : []))
-            .catch(() => {
-              eventsGrid.innerHTML = '<p class="event-meta">Could not load events. Check back soon.</p>';
-            });
+          eventsGrid.innerHTML = '<p class="event-meta">Could not load events. Check back soon.</p>';
         });
     };
 
