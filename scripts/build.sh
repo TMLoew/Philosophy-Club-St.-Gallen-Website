@@ -7,22 +7,17 @@ cd "$ROOT_DIR"
 ADMIN_USER="${ADMIN_USER:-p80pe}"
 ADMIN_PASSWORD="${ADMIN_PASSWORD:-}"
 
-if [[ -z "${ADMIN_PASSWORD}" ]]; then
-  if [[ "${NETLIFY:-false}" == "true" ]]; then
-    echo "ERROR: ADMIN_PASSWORD is not set. Set it in Netlify environment to protect /admin." >&2
-    exit 1
-  else
-    ADMIN_PASSWORD="dev-password"
-    echo "WARNING: ADMIN_PASSWORD not set. Using dev placeholder. Set it in Netlify env for real deploys." >&2
-  fi
-fi
-
-cat > _headers <<EOF
+# Only write Basic Auth headers when a password is provided; otherwise skip so the site still builds.
+if [[ -n "${ADMIN_PASSWORD}" ]]; then
+  cat > _headers <<EOF
 /admin
   Basic-Auth: ${ADMIN_USER}:${ADMIN_PASSWORD}
 
 /admin/*
   Basic-Auth: ${ADMIN_USER}:${ADMIN_PASSWORD}
 EOF
-
-echo "Generated _headers with Basic Auth for /admin (user: ${ADMIN_USER})."
+  echo "Generated _headers with Basic Auth for /admin (user: ${ADMIN_USER})."
+else
+  echo "WARNING: ADMIN_PASSWORD not set; skipping Basic Auth headers. Set ADMIN_PASSWORD (and optionally ADMIN_USER) in Netlify env to protect /admin." >&2
+  # leave any existing _headers untouched if present
+fi
