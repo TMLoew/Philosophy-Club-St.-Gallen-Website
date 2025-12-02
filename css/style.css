@@ -580,6 +580,15 @@ h1, h2, h3, h4 {
   color: var(--accent-strong);
 }
 
+.event-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-med);
+  border: 1px solid var(--border-subtle);
+}
+
 .event-meta {
   font-size: 0.95rem;
   color: var(--text-muted);

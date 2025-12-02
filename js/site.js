@@ -63,12 +63,14 @@
         return;
       }
       eventsGrid.innerHTML = events.map((event) => {
-        const { title, date, time, location, url, description } = event;
+        const { title, date, time, location, url, description, image } = event;
         const meta = [date, time, location].filter(Boolean).join(' · ');
         const link = url ? `<a class="event-link" href="${url}" target="_blank" rel="noopener noreferrer">Learn more</a>` : '';
         const desc = description ? `<p class="event-desc">${description}</p>` : '';
+        const img = image ? `<div class="event-image" style="background-image: url('${image}')"></div>` : '';
         return `
           <article class="event-card">
+            ${img}
             <h3 class="event-title">${title || 'Event'}</h3>
             ${meta ? `<p class="event-meta">${meta}</p>` : ''}
             ${desc}

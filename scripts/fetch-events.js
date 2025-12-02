@@ -45,8 +45,9 @@ async function fetchEvents() {
     date: ev.startDate || ev.date || '',
     time: ev.time || '',
     location: ev.location || ev.locationDetails || '',
-    url: ev.externalRegistrationUrl || ev.featuredImage || SOURCE_URL,
-    description: ev.description || ev.longDescription || ''
+    url: ev.externalRegistrationUrl || (ev.slug ? `https://uniclubs.ch/hsg/events/${ev.slug}` : '') || ev.featuredImage || SOURCE_URL,
+    description: ev.description || ev.longDescription || '',
+    image: ev.featuredImage || (ev.image?.s3Key ? `https://d396kn70sxtfio.cloudfront.net/${ev.image.s3Key}` : '')
   }));
 }
 
