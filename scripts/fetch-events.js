@@ -13,11 +13,33 @@ async function fetchEvents() {
     throw new Error(`Upstream responded with ${res.status}`);
   }
   const html = await res.text();
-  const match = html.match(/"events":(\[.*?\])\s*,\s*"tiers"/s);
-  if (!match) {
-    throw new Error('Could not parse events array');
+
+  // UniClubs now renders the events array inside the HTML (escaped) with "$D" prefix on dates.
+  const startToken = '\\"events\\":[';
+  const endToken = '],\\"tiers\\":';
+  const startIdx = html.indexOf(startToken);
+  if (startIdx === -1) throw new Error('Could not find events start');
+  const afterStart = html.slice(startIdx + startToken.length - 1); // keep leading '['
+  const endIdx = afterStart.indexOf(endToken);
+  if (endIdx === -1) throw new Error('Could not find events end');
+
+  const block = afterStart.slice(0, endIdx + 1).trim(); // include closing ]
+
+  // Normalize escape sequences: collapse over-escaped quotes, drop $D prefixes, and fix stray escapes.
+  const jsonText = block
+    .replace(/\\\\\"/g, '"')    // remove double-escaped quotes (e.g., \"\"Title\"\")
+    .replace(/\\"/g, '"')      // unescape structural quotes
+    .replace(/\$D/g, '')       // strip date prefix
+    .replace(/\\([A-Za-z])/g, '$1') // fix stray escapes like \D
+    .replace(/""/g, '"');      // collapse double quotes inside values
+
+  let events;
+  try {
+    events = JSON.parse(jsonText);
+  } catch (err) {
+    throw new Error('Failed to JSON-parse events');
   }
-  const events = JSON.parse(match[1]);
+
   return events.map((ev) => ({
     title: ev.title,
     date: ev.startDate || ev.date || '',
