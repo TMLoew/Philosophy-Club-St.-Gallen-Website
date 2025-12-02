@@ -16,6 +16,25 @@
       : date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
+  const formatEventDate = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    const day = date.getDate();
+    const suffix = (n) => {
+      if (n >= 11 && n <= 13) return 'th';
+      switch (n % 10) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+      }
+    };
+    const month = date.toLocaleDateString('en-GB', { month: 'long' });
+    const year = date.getFullYear();
+    return `${day}${suffix(day)} of ${month} ${year}`;
+  };
+
   const loadBoard = async (details) => {
     if (details.dataset.loaded === 'true') return;
     const src = details.dataset.boardSrc;
@@ -64,7 +83,8 @@
       }
       eventsGrid.innerHTML = events.map((event) => {
         const { title, date, time, location, url, description, image } = event;
-        const meta = [date, time, location].filter(Boolean).join(' · ');
+        const prettyDate = formatEventDate(date);
+        const meta = [prettyDate, time, location].filter(Boolean).join(' · ');
         const link = url ? `<a class="event-link" href="${url}" target="_blank" rel="noopener noreferrer">Learn more</a>` : '';
         const desc = description ? `<p class="event-desc">${description}</p>` : '';
         const img = image ? `<div class="event-image" style="background-image: url('${image}')"></div>` : '';
