@@ -1,6 +1,0 @@
-[build]
-  publish = "."
-  command = "bash scripts/build.sh"
-
-[functions]
-  directory = "netlify/functions"
