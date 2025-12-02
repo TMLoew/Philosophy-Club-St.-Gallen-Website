@@ -63,9 +63,24 @@
         <div class="events-header">
           <h2>Upcoming events</h2>
           <a class="btn ghost" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
+          <button id="refresh-events" class="btn ghost admin-only" type="button">Refresh events</button>
         </div>
         <div id="events-grid" class="events-grid">
           <!-- JS will render events from data/events.json -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section posts-section">
+      <div class="container">
+        <div class="posts-header">
+          <div>
+            <h2>Updates &amp; posts</h2>
+            <p class="posts-subtitle">Latest announcements from the club.</p>
+          </div>
+        </div>
+        <div id="posts-grid" class="posts-grid">
+          <!-- JS will render posts from data/posts.json -->
         </div>
       </div>
     </section>

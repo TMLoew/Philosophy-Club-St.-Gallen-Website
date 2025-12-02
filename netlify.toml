@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "echo 'Static site – no build step'"
+  command = "bash scripts/build.sh"
 
 [functions]
   directory = "netlify/functions"

@@ -27,3 +27,21 @@ collections:
           - { label: "Location", name: "location", widget: "string", required: false }
           - { label: "Link", name: "url", widget: "string", required: false }
           - { label: "Description", name: "description", widget: "text", required: false }
+  - name: "posts"
+    label: "Posts"
+    label_singular: "Post"
+    file: "data/posts.json"
+    description: "News or blog posts shown on the site."
+    format: "json"
+    fields:
+      - label: "Posts"
+        name: "posts"
+        widget: "list"
+        allow_add: true
+        summary: "{{fields.title}} – {{fields.date}}"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
+          - { label: "Summary", name: "summary", widget: "text", required: false }
+          - { label: "Link", name: "url", widget: "string", required: false }
+          - { label: "Body", name: "body", widget: "markdown", required: false }

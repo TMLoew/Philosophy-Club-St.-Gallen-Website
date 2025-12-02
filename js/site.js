@@ -8,6 +8,14 @@
   const accordionItems = Array.from(document.querySelectorAll('.board-accordion details'));
   const parser = new DOMParser();
 
+  const formatDate = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime())
+      ? value
+      : date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  };
+
   const loadBoard = async (details) => {
     if (details.dataset.loaded === 'true') return;
     const src = details.dataset.boardSrc;
@@ -46,6 +54,8 @@
   });
 
   const eventsGrid = document.getElementById('events-grid');
+  const refreshBtn = document.getElementById('refresh-events');
+  const isAdminView = new URLSearchParams(window.location.search).has('admin');
   if (eventsGrid) {
     const render = (events) => {
       if (!events.length) {
@@ -68,16 +78,66 @@
       }).join('');
     };
 
-    fetch('/.netlify/functions/uniclubs-events')
-      .then((res) => res.ok ? res.json() : Promise.reject())
-      .then((data) => render(Array.isArray(data.events) ? data.events : []))
+    const loadEvents = (force = false) => {
+      const bust = force ? `?bust=${Date.now()}` : '';
+      const options = force ? { cache: 'no-store' } : {};
+      return fetch(`/.netlify/functions/uniclubs-events${bust}`, options)
+        .then((res) => res.ok ? res.json() : Promise.reject())
+        .then((data) => render(Array.isArray(data.events) ? data.events : []))
+        .catch(() => {
+          fetch('data/events.json')
+            .then((res) => res.json())
+            .then((data) => render(Array.isArray(data.events) ? data.events : []))
+            .catch(() => {
+              eventsGrid.innerHTML = '<p class="event-meta">Could not load events. Check back soon.</p>';
+            });
+        });
+    };
+
+    if (refreshBtn) {
+      if (isAdminView) {
+        refreshBtn.classList.add('is-visible');
+      }
+      refreshBtn.addEventListener('click', () => {
+        eventsGrid.innerHTML = '<p class="event-meta">Refreshing feed…</p>';
+        refreshBtn.disabled = true;
+        loadEvents(true).finally(() => {
+          refreshBtn.disabled = false;
+        });
+      });
+    }
+
+    loadEvents(false);
+  }
+
+  const postsGrid = document.getElementById('posts-grid');
+  if (postsGrid) {
+    const renderPosts = (posts) => {
+      if (!posts.length) {
+        postsGrid.innerHTML = '<p class="post-meta">No posts yet. Check back soon.</p>';
+        return;
+      }
+      postsGrid.innerHTML = posts.map((post) => {
+        const { title, date, summary, url } = post;
+        const meta = formatDate(date);
+        const link = url ? `<a class="post-link" href="${url}" target="_blank" rel="noopener noreferrer">Read more</a>` : '';
+        const desc = summary ? `<p class="post-desc">${summary}</p>` : '';
+        return `
+          <article class="post-card">
+            <h3 class="post-title">${title || 'Post'}</h3>
+            ${meta ? `<p class="post-meta">${meta}</p>` : ''}
+            ${desc}
+            ${link}
+          </article>
+        `;
+      }).join('');
+    };
+
+    fetch('data/posts.json')
+      .then((res) => res.json())
+      .then((data) => renderPosts(Array.isArray(data.posts) ? data.posts : []))
       .catch(() => {
-        fetch('data/events.json')
-          .then((res) => res.json())
-          .then((data) => render(Array.isArray(data.events) ? data.events : []))
-          .catch(() => {
-            eventsGrid.innerHTML = '<p class="event-meta">Could not load events. Check back soon.</p>';
-          });
+        postsGrid.innerHTML = '<p class="post-meta">Could not load posts. Check back soon.</p>';
       });
   }
 })();

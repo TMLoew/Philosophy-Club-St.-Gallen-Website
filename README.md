@@ -6,7 +6,10 @@ What it is: a simple HTML/CSS/JS site hosted on Netlify, code in GitHub. No data
 - Current board: edit `about-us.html` and replace photos in `images/board/`.
 - Former boards: edit the matching `board-*.html` and photos in `images/board/`.
 - Events: auto-pulled from UniClubs via a Netlify Function; if that fails, it falls back to `data/events.json` (you can edit that file manually).
+- Posts/updates: edit `data/posts.json` (or use `/admin` once Netlify Identity + Git Gateway are configured).
 - Styles: `css/style.css`. Scripts: `js/site.js`.
+- Admin extras: add `?admin=1` to the site URL to reveal the “Refresh events” button (forces a fresh fetch from UniClubs, bypassing cached responses).
+- Admin password: `/admin` is protected by Netlify Basic Auth. Set `ADMIN_PASSWORD` (required) and optionally `ADMIN_USER` in Netlify env vars; the build script (`scripts/build.sh`) writes `_headers` with `Basic-Auth: user:pass`. Deploy will fail if `ADMIN_PASSWORD` is missing.
 
 ## Editing workflow
 - Make changes in GitHub (HTML, CSS, images, `data/events.json`).
