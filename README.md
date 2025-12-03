@@ -23,7 +23,12 @@ What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No
 ## DNS and domain (GitHub Pages)
 - Set CNAME `www` (or root via ALIAS/ANAME) to `<username>.github.io` or your Pages custom domain target.
 - In the repo settings, configure Pages, set the custom domain, and enable HTTPS.
+- Lima DNS (do not change):
+  - `philosophyclubsg.com` A records: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+  - `philosophyclubsg.com` AAAA records: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+  - `www.philosophyclubsg.com` CNAME to `TMLoew.github.io`
 
 ## Social links
 - Instagram: https://www.instagram.com/philosophyclub.sg/
 - LinkedIn: https://www.linkedin.com/company/philosophy-club/posts/?feedView=all
+- LinkedIn: https://www.linkedin.com/company/philosophy-club
