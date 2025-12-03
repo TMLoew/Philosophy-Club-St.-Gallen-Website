@@ -572,12 +572,14 @@ h1, h2, h3, h4 {
   box-shadow: none;
   display: grid;
   gap: 0.4rem;
+  overflow: hidden;
 }
 
 .event-title {
   margin: 0;
   font-size: 1.05rem;
   color: var(--accent-strong);
+  word-break: break-word;
 }
 
 .event-image {
@@ -587,17 +589,20 @@ h1, h2, h3, h4 {
   background-position: center;
   border-radius: var(--radius-med);
   border: 1px solid var(--border-subtle);
+  overflow: hidden;
 }
 
 .event-meta {
   font-size: 0.95rem;
   color: var(--text-muted);
+  word-break: break-word;
 }
 
 .event-desc {
   font-size: 0.95rem;
   color: var(--text-muted);
   margin: 0.2rem 0 0.4rem;
+  word-break: break-word;
 }
 
 .event-link {

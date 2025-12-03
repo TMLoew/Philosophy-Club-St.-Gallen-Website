@@ -101,8 +101,8 @@
     };
 
     const loadEvents = (force = false) => {
-      const bust = force ? `?bust=${Date.now()}` : '';
-      const options = force ? { cache: 'no-store' } : {};
+      const bust = `?bust=${force ? Date.now() : 'static'}`;
+      const options = { cache: 'no-store' };
       return fetch(`data/events.json${bust}`, options)
         .then((res) => res.json())
         .then((data) => render(Array.isArray(data.events) ? data.events : []))
