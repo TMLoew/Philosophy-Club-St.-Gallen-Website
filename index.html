@@ -59,6 +59,44 @@
       </div>
     </section>
 
+    <section class="section section-accent" id="event-request">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Propose an event</h2>
+          <p>Have an idea for a talk, panel, or trip? Send us the details and we’ll review it.</p>
+        </div>
+        <form id="event-request-form" class="event-form">
+          <div class="form-grid">
+            <label class="form-field">
+              <span>Your name</span>
+              <input type="text" name="name" required placeholder="Alex Example">
+            </label>
+            <label class="form-field">
+              <span>Email</span>
+              <input type="email" name="email" required placeholder="you@example.com">
+            </label>
+            <label class="form-field">
+              <span>Event title</span>
+              <input type="text" name="title" required placeholder="Philosophy of AI">
+            </label>
+            <label class="form-field">
+              <span>Preferred date</span>
+              <input type="date" name="date" required>
+            </label>
+          </div>
+          <label class="form-field">
+            <span>Event description</span>
+            <textarea name="description" rows="4" required placeholder="What is it about? Who is involved? Any links?"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Send request</button>
+            <p class="form-note">We’ll get back to you by email.</p>
+          </div>
+          <p id="event-form-status" class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
     <section class="events-section">
       <div class="container">
         <div class="events-header">

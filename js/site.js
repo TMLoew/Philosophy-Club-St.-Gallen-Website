@@ -157,4 +157,27 @@
         postsGrid.innerHTML = '<p class="post-meta">Could not load posts. Check back soon.</p>';
       });
   }
+
+  const eventForm = document.getElementById('event-request-form');
+  const eventStatus = document.getElementById('event-form-status');
+  if (eventForm) {
+    eventForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(eventForm);
+      const name = data.get('name') || '';
+      const email = data.get('email') || '';
+      const title = data.get('title') || '';
+      const date = data.get('date') || '';
+      const description = data.get('description') || '';
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\nTitle: ${title}\nPreferred date: ${date}\n\n${description}`
+      );
+      const subject = encodeURIComponent(`Event request: ${title}`);
+      const mailto = `mailto:philosophyclubstgallen@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = mailto;
+      if (eventStatus) {
+        eventStatus.textContent = 'Opening your email client…';
+      }
+    });
+  }
 })();

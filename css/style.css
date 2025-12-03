@@ -676,6 +676,60 @@ h1, h2, h3, h4 {
   font-size: 0.95rem;
 }
 
+.event-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-med);
+  font: inherit;
+  color: #000;
+  background: #fff;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: 2px solid var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.form-note {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.form-status {
+  margin: 0;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
 /* Former boards ordered list */
 .former-boards {
   padding-left: 1.2rem;
