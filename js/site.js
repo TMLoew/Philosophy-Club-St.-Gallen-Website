@@ -72,16 +72,18 @@
     frame.addEventListener('load', hide, { once: true });
   });
 
-  const eventsGrid = document.getElementById('events-grid');
+  const upcomingGrid = document.getElementById('upcoming-events-grid');
+  const pastGrid = document.getElementById('past-events-grid');
   const refreshBtn = document.getElementById('refresh-events');
   const isAdminView = new URLSearchParams(window.location.search).has('admin');
-  if (eventsGrid) {
-    const render = (events) => {
+  if (upcomingGrid || pastGrid) {
+    const renderList = (container, events, emptyMsg) => {
+      if (!container) return;
       if (!events.length) {
-        eventsGrid.innerHTML = '<p class="event-meta">No upcoming events right now. Follow us on Instagram for updates.</p>';
+        container.innerHTML = `<p class="event-meta">${emptyMsg}</p>`;
         return;
       }
-      eventsGrid.innerHTML = events.map((event) => {
+      container.innerHTML = events.map((event) => {
         const { title, date, time, location, url, description, image } = event;
         const prettyDate = formatEventDate(date);
         const meta = [prettyDate, time, location].filter(Boolean).join(' · ');
@@ -100,14 +102,50 @@
       }).join('');
     };
 
+    const splitEvents = (events) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const upcoming = [];
+      const past = [];
+      events.forEach((ev) => {
+        const d = ev.date ? new Date(ev.date) : null;
+        if (!d || Number.isNaN(d.getTime())) {
+          upcoming.push(ev);
+          return;
+        }
+        d.setHours(0, 0, 0, 0);
+        if (d >= today) {
+          upcoming.push(ev);
+        } else {
+          past.push(ev);
+        }
+      });
+      const byDateAsc = (a, b) => new Date(a.date) - new Date(b.date);
+      const byDateDesc = (a, b) => new Date(b.date) - new Date(a.date);
+      return {
+        upcoming: upcoming.sort(byDateAsc),
+        past: past.sort(byDateDesc)
+      };
+    };
+
     const loadEvents = (force = false) => {
       const bust = `?bust=${force ? Date.now() : 'static'}`;
       const options = { cache: 'no-store' };
       return fetch(`data/events.json${bust}`, options)
         .then((res) => res.json())
-        .then((data) => render(Array.isArray(data.events) ? data.events : []))
+        .then((data) => {
+          const list = Array.isArray(data.events) ? data.events : [];
+          const { upcoming, past } = splitEvents(list);
+          renderList(upcomingGrid, upcoming, 'No upcoming events right now. Follow us on Instagram for updates.');
+          renderList(pastGrid, past, 'No past events listed yet.');
+        })
         .catch(() => {
-          eventsGrid.innerHTML = '<p class="event-meta">Could not load events. Check back soon.</p>';
+          if (upcomingGrid) {
+            upcomingGrid.innerHTML = '<p class="event-meta">Could not load events. Check back soon.</p>';
+          }
+          if (pastGrid) {
+            pastGrid.innerHTML = '';
+          }
         });
     };
 
@@ -116,7 +154,9 @@
         refreshBtn.classList.add('is-visible');
       }
       refreshBtn.addEventListener('click', () => {
-        eventsGrid.innerHTML = '<p class="event-meta">Refreshing feed…</p>';
+        if (upcomingGrid) {
+          upcomingGrid.innerHTML = '<p class="event-meta">Refreshing feed…</p>';
+        }
         refreshBtn.disabled = true;
         loadEvents(true).finally(() => {
           refreshBtn.disabled = false;

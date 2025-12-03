@@ -59,6 +59,26 @@
       </div>
     </section>
 
+    <section class="ig-section">
+      <div class="container">
+        <div class="ig-card">
+          <div class="ig-card__header">
+            <h2 class="ig-card__title">Current events</h2>
+          </div>
+          <div class="ig-card__body" style="padding: 1.5rem; position: static; background: transparent;">
+            <p style="margin: 0 0 0.8rem; color: #0b2f5e; font-weight: 600;">Find our latest events on:</p>
+            <p style="margin: 0;">
+              <a class="ig-card__link" href="https://uniclubs.ch/hsg/clubs/philosophy-club" target="_blank" rel="noopener noreferrer">UniClubs</a>
+              &nbsp;|&nbsp;
+              <a class="ig-card__link" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Instagram</a>
+              &nbsp;|&nbsp;
+              <a class="ig-card__link" href="https://shsg.ch/clubs/618443deee658a52d07283b2" target="_blank" rel="noopener noreferrer">SHSG</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="events-section">
       <div class="container">
         <div class="events-header">
@@ -66,9 +86,11 @@
           <a class="btn ghost" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
           <button id="refresh-events" class="btn ghost admin-only" type="button">Refresh events</button>
         </div>
-        <div id="events-grid" class="events-grid">
-          <!-- JS will render events from data/events.json -->
+        <div id="upcoming-events-grid" class="events-grid"></div>
+        <div class="events-header" style="margin-top: 2rem;">
+          <h3>Past events</h3>
         </div>
+        <div id="past-events-grid" class="events-grid"></div>
       </div>
     </section>
 
@@ -96,26 +118,6 @@
         <div class="membership-actions">
           <a href="https://uniclubs.ch/hsg/clubs/philosophy-club" class="btn secondary" target="_blank" rel="noopener noreferrer">Become a member</a>
           <p class="membership-note">You can also reach out by email if you have questions before joining.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="ig-section">
-      <div class="container">
-        <div class="ig-card">
-          <div class="ig-card__header">
-            <h2 class="ig-card__title">Current events</h2>
-          </div>
-          <div class="ig-card__body" style="padding: 1.5rem; position: static; background: transparent;">
-            <p style="margin: 0 0 0.8rem; color: #0b2f5e; font-weight: 600;">Find our latest events on:</p>
-            <p style="margin: 0;">
-              <a class="ig-card__link" href="https://uniclubs.ch/hsg/clubs/philosophy-club" target="_blank" rel="noopener noreferrer">UniClubs</a>
-              &nbsp;|&nbsp;
-              <a class="ig-card__link" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Instagram</a>
-              &nbsp;|&nbsp;
-              <a class="ig-card__link" href="https://shsg.ch/clubs/618443deee658a52d07283b2" target="_blank" rel="noopener noreferrer">SHSG</a>
-            </p>
-          </div>
         </div>
       </div>
     </section>
