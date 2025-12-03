@@ -348,16 +348,19 @@ h1, h2, h3, h4 {
 
 /* Board grid styles for the “About Us” and former board pages */
 .board-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 1.2rem;
+  justify-content: center;
 }
 
 .board-card {
   padding: 0;
   border: none;
   background: transparent;
+  flex: 0 1 230px;
+  max-width: 240px;
 }
 
 .board-card h3 {
