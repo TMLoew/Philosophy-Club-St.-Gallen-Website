@@ -11,7 +11,7 @@ What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No
 - Admin extras: add `?admin=1` to the site URL to reveal the “Refresh events” button (cache-busts `data/events.json` fetch). On GitHub Pages there is no server-side auth; `/admin` is public unless protected at the repo level.
 
 ## GitHub Pages + UniClubs events
-- GitHub Pages can’t run Netlify Functions. A GitHub Action now runs every 6 hours (and on demand) to pull UniClubs events and write `data/events.json` (`.github/workflows/fetch-events.yml`).
+- A GitHub Action now runs every 2 hours (and on demand) to pull UniClubs events and write `data/events.json` (`.github/workflows/fetch-events.yml`).
 - The front-end reads `data/events.json` directly (no functions). You can still click “Refresh events” with `?admin=1` to re-fetch the static JSON with cache-busting.
 - To manually update events, run `node scripts/fetch-events.js` locally and commit the updated `data/events.json`.
 
