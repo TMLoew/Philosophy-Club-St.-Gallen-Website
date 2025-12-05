@@ -52,6 +52,17 @@ function parseEventsBlock(block) {
     // continue
   }
 
+  const unescaped = block
+    .replace(/\\u0026/g, '&')
+    .replace(/\\n/g, ' ')
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+  try {
+    return JSON.parse(unescaped);
+  } catch (e) {
+    // continue
+  }
+
   throw new Error('Failed to JSON-parse events');
 }
 
@@ -81,15 +92,40 @@ async function fetchEvents() {
     return null;
   }
 
-  return events.map((ev) => ({
-    title: ev.title,
-    date: ev.startDate || ev.date || '',
-    time: ev.time || '',
-    location: ev.location || ev.locationDetails || '',
-    url: ev.externalRegistrationUrl || (ev.slug ? `https://uniclubs.ch/hsg/events/${ev.slug}` : '') || ev.featuredImage || SOURCE_URL,
-    description: ev.description || ev.longDescription || '',
-    image: ev.featuredImage || (ev.image?.s3Key ? `https://d396kn70sxtfio.cloudfront.net/${ev.image.s3Key}` : '')
-  }));
+  return events.map((ev) => {
+    const rawDate = ev.startDate || ev.date || ev.startsAt || ev.start || '';
+
+    let time = ev.time || ev.startTime || '';
+    if (!time && rawDate) {
+      const d = new Date(rawDate);
+      if (!Number.isNaN(d.getTime())) {
+        time = d.toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' });
+      }
+    }
+
+    const location = ev.location || ev.locationDetails || ev.venueName || ev.venue || '';
+
+    const slug = ev.slug || ev.eventSlug || ev.handle || '';
+    const url = ev.externalRegistrationUrl
+      || (slug ? `https://uniclubs.ch/hsg/clubs/philosophy-club/events/${slug}` : '')
+      || ev.featuredImage
+      || SOURCE_URL;
+
+    const description = ev.longDescription || ev.description || ev.summary || '';
+
+    const image = ev.featuredImage
+      || (ev.image?.s3Key ? `https://d396kn70sxtfio.cloudfront.net/${ev.image.s3Key}` : '');
+
+    return {
+      title: ev.title,
+      date: rawDate,
+      time,
+      location,
+      url,
+      description,
+      image
+    };
+  });
 }
 
 async function main() {
