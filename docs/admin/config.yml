@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "philosophy-site/images/uploads"
-public_folder: "/philosophy-site/images/uploads"
+media_folder: "docs/images/uploads"
+public_folder: "/images/uploads"
 
 publish_mode: editorial_workflow
 
@@ -14,7 +14,7 @@ collections:
     files:
       - label: "Events"
         name: "events"
-        file: "philosophy-site/data/events.json"
+        file: "docs/data/events.json"
         description: "Upcoming and featured events shown on the homepage."
         format: "json"
         fields:
@@ -36,7 +36,7 @@ collections:
     files:
       - label: "Posts"
         name: "posts"
-        file: "philosophy-site/data/posts.json"
+        file: "docs/data/posts.json"
         description: "News or blog posts shown on the site."
         format: "json"
         fields:
