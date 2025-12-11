@@ -65,15 +65,13 @@
           <div class="ig-card__header">
             <h2 class="ig-card__title">Current events</h2>
           </div>
-          <div class="ig-card__body" style="padding: 1.5rem; position: static; background: transparent;">
-            <p style="margin: 0 0 0.8rem; color: #0b2f5e; font-weight: 600;">Find our latest events on:</p>
-            <p style="margin: 0;">
-              <a class="ig-card__link" href="https://uniclubs.ch/hsg/clubs/philosophy-club" target="_blank" rel="noopener noreferrer">UniClubs</a>
-              &nbsp;|&nbsp;
-              <a class="ig-card__link" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Instagram</a>
-              &nbsp;|&nbsp;
-              <a class="ig-card__link" href="https://shsg.ch/clubs/618443deee658a52d07283b2" target="_blank" rel="noopener noreferrer">SHSG</a>
-            </p>
+          <div class="ig-card__body ig-card__body--static">
+            <p class="current-events__label">Find our latest events on:</p>
+            <div class="current-events__triangle">
+              <a class="btn ghost current-events__btn" href="https://uniclubs.ch/hsg/clubs/philosophy-club" target="_blank" rel="noopener noreferrer">UniClubs</a>
+              <a class="btn ghost current-events__btn" href="https://shsg.ch/clubs/618443deee658a52d07283b2" target="_blank" rel="noopener noreferrer">SHSG</a>
+              <a class="btn ghost current-events__btn" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
           </div>
         </div>
       </div>
@@ -83,7 +81,6 @@
       <div class="container">
         <div class="events-header">
           <h2>Upcoming events</h2>
-          <a class="btn ghost" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
           <button id="refresh-events" class="btn ghost admin-only" type="button">Refresh events</button>
         </div>
         <div id="upcoming-events-grid" class="events-grid"></div>
