@@ -31,6 +31,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/events.json
+          git add philosophy-site/data/events.json
           git commit -m "chore: update events data"
           git push

@@ -1,0 +1,31 @@
+{
+  "events": [
+    {
+      "title": "Carl Gustav Jung Workshop",
+      "date": "2025-12-09T17:15:00.000Z",
+      "time": "17:15–19:00",
+      "location": "Room 01-113",
+      "url": "https://uniclubs.ch/hsg/clubs/philosophy-club/events/c-g-jung-workshop",
+      "description": "Collaborative exploration of C. G. Jung's thought—psychological method, archetypes, collective unconscious, and shadow work—with philosophical and psychological insights.",
+      "image": "images/events/CGJung1.jpeg"
+    },
+    {
+      "title": "Denken im Sprint: Eine philosophische Stafette mit Moderierenden der Sternstunde Philosophie",
+      "date": "2025-11-21T15:50:00.000Z",
+      "time": "",
+      "location": "Kanzlei Club, Kanzleistrasse 56, 8004 Zürich",
+      "url": "https://uniclubs.ch/hsg/events/denken-im-sprint-eine-philosophische-stafette-mit-moderierenden-der-sternstunde-philosophie",
+      "description": "https://www.langenachtderphilosophie.ch/speakers/moderierende-sternstunde-philosophie/",
+      "image": "https://d396kn70sxtfio.cloudfront.net/public/event_image/1763554438061_6ca8be6a16d8e1b0dfc204f0.jpg"
+    },
+    {
+      "title": "Freedom Beyond Liberalism: Is Democracy Enough?",
+      "date": "2025-10-23T16:15:00.000Z",
+      "time": "",
+      "location": "Hilti Innovation Room 1 (11-1071)",
+      "url": "https://uniclubs.ch/hsg/events/freedom-beyond-liberalism-is-democracy-enough",
+      "description": "Hosted by Professor Árpád Szakolczai, University College Cork u0026 HSG Collegium, and in collaboration with the Rethinking Economics St. Gallen",
+      "image": "https://d396kn70sxtfio.cloudfront.net/public/event_image/1761051982887_0a7eead26a1545904d42216a.jpg"
+    }
+  ]
+}

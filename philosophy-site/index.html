@@ -7,7 +7,7 @@
   <!-- Google fonts for a modern serif/sans pairing -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -18,28 +18,20 @@
   <header class="site-header">
     <div class="container nav">
       <a href="index.html" class="logo">
-        <!-- Logo image pulled from the original site. Replace with your own if desired. -->
-        <img src="images/header.jpg" alt="Philosophy Club St. Gallen logo" class="logo-img" />
+        <img src="images/logo.png" alt="Philosophy Club St. Gallen logo" class="logo-img" />
       </a>
       <nav class="nav-links">
         <a href="about-us.html">About Us</a>
         <a href="https://uniclubs.ch/hsg/clubs/philosophy-club" target="_blank" rel="noopener noreferrer">Become a member</a>
+        <a href="#event-request">Propose an event</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero section -->
     <section class="hero" id="top">
       <div class="container hero-grid">
-        <div class="hero-text">
-          <h1>Philosophy Club at the<br>University of St.&nbsp;Gallen</h1>
-          <p class="hero-subtitle">Est. 2020 – A student‑run space for freedom of opinion, open discussions and curiosity.</p>
-          <div class="hero-actions">
-            <a href="https://uniclubs.ch/hsg/clubs/philosophy-club" class="btn primary" target="_blank" rel="noopener noreferrer">Become a member</a>
-            <a href="about-us.html" class="btn ghost">Learn more</a>
-          </div>
-        </div>
+        <h1>Philosophy Club at the<br>University of St.Gallen. Est. 2020</h1>
       </div>
     </section>
 
@@ -67,6 +59,52 @@
       </div>
     </section>
 
+    <section class="ig-section">
+      <div class="container">
+        <div class="ig-card">
+          <div class="ig-card__header">
+            <h2 class="ig-card__title">Current events</h2>
+          </div>
+          <div class="ig-card__body ig-card__body--static">
+            <p class="current-events__label">Find our latest events on:</p>
+            <div class="current-events__triangle">
+              <a class="btn ghost current-events__btn" href="https://uniclubs.ch/hsg/clubs/philosophy-club" target="_blank" rel="noopener noreferrer">UniClubs</a>
+              <a class="btn ghost current-events__btn" href="https://shsg.ch/clubs/618443deee658a52d07283b2" target="_blank" rel="noopener noreferrer">SHSG</a>
+              <a class="btn ghost current-events__btn" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="events-section">
+      <div class="container">
+        <div class="events-header">
+          <h2>Upcoming events</h2>
+          <button id="refresh-events" class="btn ghost admin-only" type="button">Refresh events</button>
+        </div>
+        <div id="upcoming-events-grid" class="events-grid"></div>
+        <div class="events-header" style="margin-top: 2rem;">
+          <h3>Past events</h3>
+        </div>
+        <div id="past-events-grid" class="events-grid"></div>
+      </div>
+    </section>
+
+    <section class="section posts-section">
+      <div class="container">
+        <div class="posts-header">
+          <div>
+            <h2>Updates &amp; posts</h2>
+            <p class="posts-subtitle">Latest announcements from the club.</p>
+          </div>
+        </div>
+        <div id="posts-grid" class="posts-grid">
+          <!-- JS will render posts from data/posts.json -->
+        </div>
+      </div>
+    </section>
+
     <!-- Membership call to action -->
     <section class="section section-accent">
       <div class="container membership-grid">
@@ -81,23 +119,41 @@
       </div>
     </section>
 
-    <section class="ig-section">
+    <section class="section section-accent" id="event-request">
       <div class="container">
-        <div class="ig-card">
-          <div class="ig-card__header">
-            <h2 class="ig-card__title">Latest on Instagram</h2>
-            <a class="ig-card__link" href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">@philosophyclub.sg</a>
-          </div>
-          <div class="ig-card__body">
-            <iframe class="ig-embed-frame" src="https://www.instagram.com/philosophyclub.sg/embed/" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
-            <div class="ig-fallback">
-              <div>
-                <p style="margin: 0 0 0.3rem;">If the feed doesn’t load here, open it on Instagram:</p>
-                <a href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">@philosophyclub.sg</a>
-              </div>
-            </div>
-          </div>
+        <div class="section-heading">
+          <h2>Propose an event</h2>
+          <p>Have an idea for a talk, panel, or trip? Send us the details and we’ll review it.</p>
         </div>
+        <form id="event-request-form" class="event-form">
+          <div class="form-grid">
+            <label class="form-field">
+              <span>Your name</span>
+              <input type="text" name="name" required placeholder="Alex Example">
+            </label>
+            <label class="form-field">
+              <span>Email</span>
+              <input type="email" name="email" required placeholder="you@example.com">
+            </label>
+            <label class="form-field">
+              <span>Event title</span>
+              <input type="text" name="title" required placeholder="Philosophy of AI">
+            </label>
+            <label class="form-field">
+              <span>Preferred date</span>
+              <input type="date" name="date" required>
+            </label>
+          </div>
+          <label class="form-field">
+            <span>Event description</span>
+            <textarea name="description" rows="4" required placeholder="What is it about? Who is involved? Any links?"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Send request</button>
+            <p class="form-note">We’ll get back to you by email.</p>
+          </div>
+          <p id="event-form-status" class="form-status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
   </main>
@@ -114,7 +170,14 @@
         <p class="footer-title">Social</p>
         <div class="footer-links">
           <a href="https://www.instagram.com/philosophyclub.sg/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="https://www.linkedin.com/company/philosophy-club/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://www.linkedin.com/company/philosophy-club" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <div class="footer-icons">
+            <a class="footer-icon" href="https://github.com/TMLoew/Philosophy-Club-St.-Gallen-Website" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 0 0-1.34-1.76c-1.1-.75.08-.73.08-.73a2.52 2.52 0 0 1 1.84 1.24 2.54 2.54 0 0 0 3.47 1 2.54 2.54 0 0 1 .76-1.6c-2.67-.31-5.48-1.34-5.48-5.96a4.68 4.68 0 0 1 1.25-3.24 4.35 4.35 0 0 1 .12-3.19s1.01-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.29-1.56 3.3-1.24 3.3-1.24.44 1.08.46 2.29.12 3.19a4.68 4.68 0 0 1 1.25 3.24c0 4.64-2.81 5.64-5.49 5.95a2.84 2.84 0 0 1 .81 2.2v3.26c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
       <div class="footer-block footer-smallprint">

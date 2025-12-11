@@ -1,22 +1,22 @@
 # Philosophy Club St. Gallen – Website
 
-What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No database.
+What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No database. Site files live in `philosophy-site/` (root HTML files just redirect there).
 
 ## Who updates what
-- Current board: edit `about-us.html` and replace photos in `images/board/`.
-- Former boards: edit the matching `board-*.html` and photos in `images/board/`.
-- Events: auto-pulled from UniClubs by a GitHub Action that writes `data/events.json` (see below); you can also edit that file manually.
-- Posts/updates: edit `data/posts.json` (or use `/admin` if you keep Decap CMS; note GitHub Pages has no auth layer by default).
-- Styles: `css/style.css`. Scripts: `js/site.js`.
-- Admin extras: add `?admin=1` to the site URL to reveal the “Refresh events” button (cache-busts `data/events.json` fetch). On GitHub Pages there is no server-side auth; `/admin` is public unless protected at the repo level.
+- Current board: edit `philosophy-site/about-us.html` and replace photos in `philosophy-site/images/board/`.
+- Former boards: edit the matching `philosophy-site/board-*.html` and photos in `philosophy-site/images/board/`.
+- Events: auto-pulled from UniClubs by a GitHub Action that writes `philosophy-site/data/events.json` (see below); you can also edit that file manually.
+- Posts/updates: edit `philosophy-site/data/posts.json` (or use `/philosophy-site/admin` if you keep Decap CMS; note GitHub Pages has no auth layer by default).
+- Styles: `philosophy-site/css/style.css`. Scripts: `philosophy-site/js/site.js`.
+- Admin extras: add `?admin=1` to the site URL to reveal the “Refresh events” button (cache-busts `philosophy-site/data/events.json` fetch). On GitHub Pages there is no server-side auth; `/philosophy-site/admin` is public unless protected at the repo level.
 
 ## GitHub Pages + UniClubs events
-- A GitHub Action now runs every 2 hours (and on demand) to pull UniClubs events and write `data/events.json` (`.github/workflows/fetch-events.yml`).
-- The front-end reads `data/events.json` directly (no functions). You can still click “Refresh events” with `?admin=1` to re-fetch the static JSON with cache-busting.
-- To manually update events, run `node scripts/fetch-events.js` locally and commit the updated `data/events.json`.
+- A GitHub Action now runs every 2 hours (and on demand) to pull UniClubs events and write `philosophy-site/data/events.json` (`.github/workflows/fetch-events.yml`).
+- The front-end reads `philosophy-site/data/events.json` directly (no functions). You can still click “Refresh events” with `?admin=1` to re-fetch the static JSON with cache-busting.
+- To manually update events, run `node scripts/fetch-events.js` locally and commit the updated `philosophy-site/data/events.json`.
 
 ## Editing workflow
-- Make changes in GitHub (HTML, CSS, images, `data/events.json`, `data/posts.json`).
+- Make changes in GitHub (HTML, CSS, images, `philosophy-site/data/events.json`, `philosophy-site/data/posts.json`).
 - GitHub Actions handle events sync (scheduled) and GitHub Pages auto-publishes from the default branch.
 - If you want a UI, keep `/admin/` (Decap CMS) but note GitHub Pages doesn’t provide auth; you’d need to gate it elsewhere (e.g., private repo or external auth proxy).
 

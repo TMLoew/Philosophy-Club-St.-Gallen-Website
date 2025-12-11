@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// Fetch events from UniClubs and write them to data/events.json
+// Fetch events from UniClubs and write them to philosophy-site/data/events.json
 // Designed for GitHub Actions (or manual runs) on GitHub Pages hosting.
 const fs = require('fs');
 const path = require('path');
 
-const TARGET = path.join(__dirname, '..', 'data', 'events.json');
+const TARGET = path.join(__dirname, '..', 'philosophy-site', 'data', 'events.json');
 const SOURCE_URL = 'https://uniclubs.ch/hsg/clubs/philosophy-club';
 
 // Find and return the first JSON array value for a key by bracket matching
@@ -83,7 +83,7 @@ async function fetchEvents() {
     events = parseEventsBlock(block);
   } catch (err) {
     try {
-      const dbgPath = path.join(__dirname, '..', 'data', 'events-debug.json');
+      const dbgPath = path.join(__dirname, '..', 'philosophy-site', 'data', 'events-debug.json');
       fs.writeFileSync(dbgPath, block.slice(0, 500000) + '\n');
       console.error(`Failed to parse events — dumped captured block to ${dbgPath}`);
     } catch (e) {
@@ -132,7 +132,7 @@ async function main() {
   try {
     const events = await fetchEvents();
     if (!events) {
-      console.error('Could not parse events; keeping existing data/events.json.');
+      console.error('Could not parse events; keeping existing philosophy-site/data/events.json.');
       return;
     }
     const payload = { events };
