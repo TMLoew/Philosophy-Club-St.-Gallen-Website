@@ -1,6 +1,6 @@
 # Philosophy Club St. Gallen – Website
 
-What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No database. Site files now live in `docs/` (GitHub Pages is configured to deploy from that folder).
+What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No database. Site files now live in `docs/` (GitHub Pages is configured to deploy from that folder; the `CNAME` file sits inside `docs/` for the custom domain).
 
 ## Who updates what
 - Current board: edit `docs/about-us.html` and replace photos in `docs/images/board/`.
