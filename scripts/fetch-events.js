@@ -36,6 +36,16 @@ function parseEventsBlock(block) {
     // continue
   }
 
+  // Next.js flight data can embed the JSON inside a heavily escaped JS string.
+  // Safely unescape it via a template literal while blocking interpolations.
+  try {
+    const safe = block.replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+    const unescaped = Function(`return \`${safe}\`;`)();
+    return JSON.parse(unescaped);
+  } catch (e) {
+    // continue
+  }
+
   if (block[0] === '"' && block[block.length - 1] === '"') {
     try {
       const unquoted = JSON.parse(block);
@@ -93,7 +103,7 @@ async function fetchEvents() {
   }
 
   return events.map((ev) => {
-    const rawDate = ev.startDate || ev.date || ev.startsAt || ev.start || '';
+    const rawDate = (ev.startDate || ev.date || ev.startsAt || ev.start || '').replace(/^\$D/, '');
 
     let time = ev.time || ev.startTime || '';
     if (!time && rawDate) {
