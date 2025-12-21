@@ -30,5 +30,5 @@ What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No
 
 ## Social links
 - Instagram: https://www.instagram.com/philosophyclub.sg/
-- LinkedIn: https://www.linkedin.com/company/philosophy-club/posts/?feedView=all
-- LinkedIn: https://www.linkedin.com/company/philosophy-club
+- Uniclubs: https://uniclubs.ch/hsg/clubs/philosophy-club
+- LinkedIn: https://www.linkedin.com/company/philosophy-club/
