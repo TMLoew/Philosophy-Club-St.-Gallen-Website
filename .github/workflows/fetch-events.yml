@@ -22,6 +22,8 @@ jobs:
 
       - name: Fetch events from UniClubs
         run: node scripts/fetch-events.js
+        env:
+          UNICLUBS_API_KEY: ${{ secrets.UNICLUBS_API_KEY }}
 
       - name: Commit changes
         run: |

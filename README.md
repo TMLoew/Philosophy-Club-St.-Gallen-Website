@@ -11,9 +11,10 @@ What it is: a simple HTML/CSS/JS site hosted on GitHub Pages, code in GitHub. No
 - Admin extras: add `?admin=1` to the site URL to reveal the “Refresh events” button (cache-busts `docs/data/events.json` fetch). On GitHub Pages there is no server-side auth; `/admin` is public unless protected at the repo level.
 
 ## GitHub Pages + UniClubs events
-- A GitHub Action now runs every 2 hours (and on demand) to pull UniClubs events and write `docs/data/events.json` (`.github/workflows/fetch-events.yml`).
+- A GitHub Action now runs every 2 hours (and on demand) to pull UniClubs events via the External API and write `docs/data/events.json` (`.github/workflows/fetch-events.yml`).
 - The front-end reads `docs/data/events.json` directly (no functions). You can still click “Refresh events” with `?admin=1` to re-fetch the static JSON with cache-busting.
-- To manually update events, run `node scripts/fetch-events.js` locally and commit the updated `docs/data/events.json`.
+- Add a `UNICLUBS_API_KEY` secret in GitHub (Settings → Secrets → Actions) so the workflow can authenticate.
+- To manually update events, set `UNICLUBS_API_KEY` in your shell, run `node scripts/fetch-events.js`, and commit the updated `docs/data/events.json`.
 
 ## Editing workflow
 - Make changes in GitHub (HTML, CSS, images, `docs/data/events.json`, `docs/data/posts.json`).

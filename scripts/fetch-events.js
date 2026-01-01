@@ -1,150 +1,108 @@
 #!/usr/bin/env node
-// Fetch events from UniClubs and write them to docs/data/events.json
+// Fetch events from UniClubs External API and write them to docs/data/events.json
 // Designed for GitHub Actions (or manual runs) on GitHub Pages hosting.
 const fs = require('fs');
 const path = require('path');
 
 const TARGET = path.join(__dirname, '..', 'docs', 'data', 'events.json');
-const SOURCE_URL = 'https://uniclubs.ch/hsg/clubs/philosophy-club';
+const API_BASE = 'https://uniclubs.ch/api/external/v1';
+const API_KEY = process.env.UNICLUBS_API_KEY;
+const CLUB_SLUG = 'philosophy-club';
 
-// Find and return the first JSON array value for a key by bracket matching
-function extractArrayByKey(html, key) {
-  const candidates = [`"${key}":`, `\\"${key}\\":`];
-  for (const pat of candidates) {
-    const idx = html.indexOf(pat);
-    if (idx === -1) continue;
-    const arrStart = html.indexOf('[', idx);
-    if (arrStart === -1) continue;
-    let depth = 0;
-    for (let i = arrStart; i < html.length; i++) {
-      const ch = html[i];
-      if (ch === '[') depth += 1;
-      else if (ch === ']') depth -= 1;
-      if (depth === 0) {
-        return html.slice(arrStart, i + 1);
-      }
-    }
+function requireApiKey() {
+  if (!API_KEY) {
+    throw new Error('Missing UNIClubs API key. Set UNICLUBS_API_KEY in your environment.');
   }
-  return null;
 }
 
-// Try multiple safe parsing strategies
-function parseEventsBlock(block) {
-  try {
-    return JSON.parse(block);
-  } catch (e) {
-    // continue
-  }
-
-  // Next.js flight data can embed the JSON inside a heavily escaped JS string.
-  // Safely unescape it via a template literal while blocking interpolations.
-  try {
-    const safe = block.replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
-    const unescaped = Function(`return \`${safe}\`;`)();
-    return JSON.parse(unescaped);
-  } catch (e) {
-    // continue
-  }
-
-  if (block[0] === '"' && block[block.length - 1] === '"') {
-    try {
-      const unquoted = JSON.parse(block);
-      return JSON.parse(unquoted);
-    } catch (e) {
-      // continue
-    }
-  }
-
-  const tryText = block.replace(/\\"/g, '"').replace(/\\\//g, '/');
-  try {
-    return JSON.parse(tryText);
-  } catch (e) {
-    // continue
-  }
-
-  const unescaped = block
-    .replace(/\\u0026/g, '&')
-    .replace(/\\n/g, ' ')
-    .replace(/\\"/g, '"')
-    .replace(/\\\\/g, '\\');
-  try {
-    return JSON.parse(unescaped);
-  } catch (e) {
-    // continue
-  }
-
-  throw new Error('Failed to JSON-parse events');
+function formatTime(value) {
+  if (!value) return '';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' });
 }
 
-async function fetchEvents() {
-  const res = await fetch(SOURCE_URL, { headers: { 'user-agent': 'philosophy-site-event-fetcher' } });
-  if (!res.ok) {
-    throw new Error(`Upstream responded with ${res.status}`);
-  }
-  const html = await res.text();
+function mapEvent(ev) {
+  const date = ev.startDate || ev.date || '';
+  const time = formatTime(date);
+  const slug = ev.slug || ev.handle || '';
 
-  const block = extractArrayByKey(html, 'events');
-  if (!block) {
-    throw new Error('Could not find events array');
-  }
+  const location = ev.location || ev.locationDetails || ev.venueName || ev.venue || '';
+  const url = ev.eventUrl
+    || ev.externalRegistrationUrl
+    || (slug ? `https://uniclubs.ch/hsg/clubs/${CLUB_SLUG}/events/${slug}` : '');
+  const description = ev.longDescription || ev.description || '';
+  const image = ev.featuredImage
+    || (ev.image?.s3Key ? `https://d396kn70sxtfio.cloudfront.net/${ev.image.s3Key}` : '');
 
-  let events;
-  try {
-    events = parseEventsBlock(block);
-  } catch (err) {
-    try {
-      const dbgPath = path.join(__dirname, '..', 'docs', 'data', 'events-debug.json');
-      fs.writeFileSync(dbgPath, block.slice(0, 500000) + '\n');
-      console.error(`Failed to parse events — dumped captured block to ${dbgPath}`);
-    } catch (e) {
-      console.error('Failed to write debug file:', e.message);
+  return {
+    title: ev.title,
+    date,
+    time,
+    location,
+    url,
+    description,
+    image
+  };
+}
+
+async function fetchEventsPage(page = 1, limit = 200) {
+  const url = new URL(`${API_BASE}/events`);
+  url.searchParams.set('page', page);
+  url.searchParams.set('limit', limit);
+  url.searchParams.set('includePast', 'true');
+  url.searchParams.set('includeDetails', 'true');
+  url.searchParams.set('onlyPublished', 'true');
+  url.searchParams.set('excludeStaffOnly', 'true');
+  url.searchParams.set('excludeDrafts', 'true');
+  url.searchParams.set('sort', 'date');
+
+  const res = await fetch(url, {
+    headers: {
+      'X-API-Key': API_KEY
     }
-    return null;
-  }
-
-  return events.map((ev) => {
-    const rawDate = (ev.startDate || ev.date || ev.startsAt || ev.start || '').replace(/^\$D/, '');
-
-    let time = ev.time || ev.startTime || '';
-    if (!time && rawDate) {
-      const d = new Date(rawDate);
-      if (!Number.isNaN(d.getTime())) {
-        time = d.toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' });
-      }
-    }
-
-    const location = ev.location || ev.locationDetails || ev.venueName || ev.venue || '';
-
-    const slug = ev.slug || ev.eventSlug || ev.handle || '';
-    const url = ev.externalRegistrationUrl
-      || (slug ? `https://uniclubs.ch/hsg/clubs/philosophy-club/events/${slug}` : '')
-      || ev.featuredImage
-      || SOURCE_URL;
-
-    const description = ev.longDescription || ev.description || ev.summary || '';
-
-    const image = ev.featuredImage
-      || (ev.image?.s3Key ? `https://d396kn70sxtfio.cloudfront.net/${ev.image.s3Key}` : '');
-
-    return {
-      title: ev.title,
-      date: rawDate,
-      time,
-      location,
-      url,
-      description,
-      image
-    };
   });
+
+  if (!res.ok) {
+    let detail = '';
+    try {
+      const body = await res.json();
+      detail = body?.error || body?.message || '';
+    } catch {
+      // ignore
+    }
+    throw new Error(`Upstream responded with ${res.status} ${res.statusText}${detail ? `: ${detail}` : ''}`);
+  }
+
+  const json = await res.json();
+  if (!json.success) {
+    throw new Error(`API responded with success=false (${json.error || 'unknown error'})`);
+  }
+  const events = json.data?.events || json.data?.items || [];
+  const pagination = json.data?.pagination || {};
+  return { events, pagination };
+}
+
+async function fetchAllEvents() {
+  requireApiKey();
+  const collected = [];
+  let page = 1;
+  let hasMore = true;
+
+  while (hasMore) {
+    const { events, pagination } = await fetchEventsPage(page);
+    collected.push(...events);
+    const { hasMore: pagHasMore, totalPages } = pagination;
+    hasMore = typeof pagHasMore === 'boolean' ? pagHasMore : page < (totalPages || page);
+    page += 1;
+  }
+
+  return collected.map(mapEvent);
 }
 
 async function main() {
   try {
-    const events = await fetchEvents();
-    if (!events) {
-      console.error('Could not parse events; keeping existing philosophy-site/data/events.json.');
-      return;
-    }
+    const events = await fetchAllEvents();
     const payload = { events };
     fs.writeFileSync(TARGET, JSON.stringify(payload, null, 2) + '\n');
     console.log(`Saved ${events.length} events to ${path.relative(process.cwd(), TARGET)}`);
