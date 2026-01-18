@@ -1,0 +1,101 @@
+{
+  "current": [
+    {
+      "name": "Ilyas Fatin Erge Ekinci",
+      "initials": "IE",
+      "role": "Co-President",
+      "image": "images/board/ilyas-ekinci.jpg",
+      "linkedin": "https://www.linkedin.com/in/ilyas-fatin-erge-ekinci-0b381929a/"
+    },
+    {
+      "name": "Tristan M. Löw",
+      "initials": "TL",
+      "role": "Co-President",
+      "image": "images/board/tristan-loew.jpg",
+      "linkedin": "https://www.linkedin.com/in/tristanloew/"
+    },
+    {
+      "name": "Amelie Feil",
+      "initials": "AF",
+      "role": "Head of Student Relations",
+      "image": "images/board/amelie-feil.jpg",
+      "linkedin": "https://www.linkedin.com/in/ameliesilvafeil/"
+    },
+    {
+      "name": "Vivien Lauer",
+      "initials": "VL",
+      "role": "Advisor",
+      "image": "images/board/vivien-lauer.jpg",
+      "linkedin": "https://www.linkedin.com/in/vivien-lauer/"
+    },
+    {
+      "name": "Emilio Andreas le Noir",
+      "initials": "EL",
+      "role": "Board Member & Head of Thought",
+      "image": "images/board/emilio-le-noir.png"
+    },
+    {
+      "name": "Leylah Lüscher",
+      "initials": "LL",
+      "role": "Head of Finance",
+      "image": "images/board/leylah-luescher.jpg",
+      "linkedin": "https://www.linkedin.com/in/leylah-l%C3%BCscher-57a937226/"
+    },
+    {
+      "name": "Tilla Merten",
+      "initials": "TM",
+      "role": "Head of Marketing",
+      "image": "images/board/tilla-merten.jpg",
+      "linkedin": "https://www.linkedin.com/in/tilla-merten/"
+    }
+  ],
+  "distinguished": [
+    {
+      "name": "Alessandro Cupolo",
+      "initials": "AC",
+      "role": "Distinguished Member",
+      "image": "images/Alessandro.jpg",
+      "linkedin": "https://www.linkedin.com/in/alessandro-cupolo-473047121/"
+    },
+    {
+      "name": "Julius Zinser",
+      "initials": "JZ",
+      "role": "Distinguished Member",
+      "image": "images/Julius.png",
+      "linkedin": "https://www.linkedin.com/in/juliuszinser/"
+    },
+    {
+      "name": "Zora Zubler",
+      "initials": "ZZ",
+      "role": "Distinguished Member",
+      "image": "images/Zora.jpg",
+      "linkedin": "https://www.linkedin.com/in/zora-zubler/"
+    }
+  ],
+  "faculty": [
+    {
+      "name": "Christine Abbt",
+      "initials": "CA",
+      "role": "Prof. Dr., Full Professor (Chair) for Philosophy",
+      "image": "images/Abbt.jpg"
+    },
+    {
+      "name": "Leire Urricelqui",
+      "initials": "LU",
+      "role": "Dr., Postdoc Assistant",
+      "image": "images/Leire.jpg"
+    },
+    {
+      "name": "Thomas Telios",
+      "initials": "TT",
+      "role": "Prof., Research Associate",
+      "image": "images/Telios.jpg"
+    },
+    {
+      "name": "Michael Geronimo Festl",
+      "initials": "MF",
+      "role": "Prof. Dr., Senior Lecturer",
+      "image": "images/Festl.jpg"
+    }
+  ]
+}

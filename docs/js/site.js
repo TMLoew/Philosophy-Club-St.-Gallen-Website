@@ -1,8 +1,67 @@
 // Shared helpers for small enhancements across the site
 (function initSite() {
+  // Register service worker for offline support
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then((registration) => {
+        console.log('ServiceWorker registered:', registration.scope);
+      }).catch((err) => {
+        console.log('ServiceWorker registration failed:', err);
+      });
+    });
+  }
+
   const yearEl = document.getElementById('year');
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
+  }
+
+  // Render board members dynamically
+  const renderBoardMembers = (container, members) => {
+    if (!container || !members || !members.length) return;
+    container.innerHTML = members.map((member) => {
+      const { name, initials, role, image, linkedin } = member;
+      const hasPhoto = image ? ' has-photo' : '';
+      const bgStyle = image ? ` style="background-image: url('${image}');"` : '';
+      const photoContent = `
+        <div class="board-photo${hasPhoto}"${bgStyle}>
+          <span class="board-initials">${initials}</span>
+          <div class="board-overlay">
+            <div>
+              <h3>${name}</h3>
+              <p>${role}</p>
+            </div>
+          </div>
+        </div>
+      `;
+      if (linkedin) {
+        return `
+          <article class="board-card">
+            <a href="${linkedin}" target="_blank" rel="noopener noreferrer" aria-label="${name} on LinkedIn">
+              ${photoContent}
+            </a>
+          </article>
+        `;
+      }
+      return `<article class="board-card">${photoContent}</article>`;
+    }).join('');
+  };
+
+  // Load board data
+  const currentBoardGrid = document.getElementById('current-board-grid');
+  const distinguishedGrid = document.getElementById('distinguished-grid');
+  const facultyGrid = document.getElementById('faculty-grid');
+  if (currentBoardGrid || distinguishedGrid || facultyGrid) {
+    fetch('data/board.json')
+      .then((res) => res.json())
+      .then((data) => {
+        renderBoardMembers(currentBoardGrid, data.current);
+        renderBoardMembers(distinguishedGrid, data.distinguished);
+        renderBoardMembers(facultyGrid, data.faculty);
+      })
+      .catch((err) => {
+        console.error('Could not load board data:', err);
+      });
   }
 
   const accordionItems = Array.from(document.querySelectorAll('.board-accordion details'));
@@ -75,8 +134,46 @@
   const upcomingGrid = document.getElementById('upcoming-events-grid');
   const pastGrid = document.getElementById('past-events-grid');
   const refreshBtn = document.getElementById('refresh-events');
+  const searchInput = document.getElementById('event-search');
   const isAdminView = new URLSearchParams(window.location.search).has('admin');
+
+  // Generate iCalendar file for an event
+  const generateICS = (event) => {
+    const { title, date, time, location, description, url } = event;
+    const eventDate = new Date(date);
+    if (!title || isNaN(eventDate.getTime())) return null;
+
+    const formatICSDate = (d) => {
+      return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    };
+
+    const startDate = formatICSDate(eventDate);
+    const endDate = formatICSDate(new Date(eventDate.getTime() + 2 * 60 * 60 * 1000)); // 2 hour default
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Philosophy Club St. Gallen//Event//EN',
+      'BEGIN:VEVENT',
+      `UID:${Date.now()}@philosophyclubsg.com`,
+      `DTSTAMP:${formatICSDate(new Date())}`,
+      `DTSTART:${startDate}`,
+      `DTEND:${endDate}`,
+      `SUMMARY:${title}`,
+      description ? `DESCRIPTION:${description.replace(/\n/g, '\\n')}` : '',
+      location ? `LOCATION:${location}` : '',
+      url ? `URL:${url}` : '',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].filter(Boolean).join('\r\n');
+
+    return icsContent;
+  };
+
   if (upcomingGrid || pastGrid) {
+    let allUpcoming = [];
+    let allPast = [];
+
     const renderList = (container, events, emptyMsg) => {
       if (!container) return;
       if (!events.length) {
@@ -89,18 +186,58 @@
         const meta = [prettyDate, time, location].filter(Boolean).join(' · ');
         const link = url ? `<a class="event-link" href="${url}" target="_blank" rel="noopener noreferrer">Learn more</a>` : '';
         const desc = description ? `<p class="event-desc">${description}</p>` : '';
-        const img = image ? `<div class="event-image" style="background-image: url('${image}')"></div>` : '';
+        const img = image ? `<div class="event-image" style="background-image: url('${image}');" role="img" aria-label="${title} event image"></div>` : '';
+        const icsData = generateICS(event);
+        const addToCalBtn = icsData ? `<button class="event-calendar-btn" data-ics="${encodeURIComponent(icsData)}" data-title="${title}" aria-label="Add ${title} to calendar">+ Add to Calendar</button>` : '';
         return `
           <article class="event-card">
             ${img}
             <h3 class="event-title">${title || 'Event'}</h3>
             ${meta ? `<p class="event-meta">${meta}</p>` : ''}
             ${desc}
-            ${link}
+            <div class="event-actions">
+              ${link}
+              ${addToCalBtn}
+            </div>
           </article>
         `;
       }).join('');
+
+      // Add event listeners for calendar buttons
+      container.querySelectorAll('.event-calendar-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const icsData = decodeURIComponent(e.target.dataset.ics);
+          const title = e.target.dataset.title || 'event';
+          const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = `${title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.ics`;
+          link.click();
+        });
+      });
     };
+
+    const filterEvents = (searchTerm) => {
+      const term = searchTerm.toLowerCase();
+      const filteredUpcoming = allUpcoming.filter(event =>
+        (event.title && event.title.toLowerCase().includes(term)) ||
+        (event.description && event.description.toLowerCase().includes(term)) ||
+        (event.location && event.location.toLowerCase().includes(term))
+      );
+      const filteredPast = allPast.filter(event =>
+        (event.title && event.title.toLowerCase().includes(term)) ||
+        (event.description && event.description.toLowerCase().includes(term)) ||
+        (event.location && event.location.toLowerCase().includes(term))
+      );
+      renderList(upcomingGrid, filteredUpcoming, 'No matching upcoming events.');
+      renderList(pastGrid, filteredPast, 'No matching past events.');
+    };
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        filterEvents(e.target.value);
+      });
+    }
 
     const splitEvents = (events) => {
       const today = new Date();
@@ -136,6 +273,8 @@
         .then((data) => {
           const list = Array.isArray(data.events) ? data.events : [];
           const { upcoming, past } = splitEvents(list);
+          allUpcoming = upcoming;
+          allPast = past;
           renderList(upcomingGrid, upcoming, 'No upcoming events right now. Follow us on Instagram for updates.');
           renderList(pastGrid, past, 'No past events listed yet.');
         })
@@ -218,6 +357,47 @@
       if (eventStatus) {
         eventStatus.textContent = 'Opening your email client…';
       }
+    });
+  }
+
+  // Blog page rendering
+  const blogGrid = document.getElementById('blog-grid');
+  if (blogGrid) {
+    fetch('data/posts.json')
+      .then((res) => res.json())
+      .then((data) => {
+        const posts = Array.isArray(data.posts) ? data.posts : [];
+        if (!posts.length) {
+          blogGrid.innerHTML = '<p class="post-meta">No posts yet. Check back soon for updates!</p>';
+          return;
+        }
+        blogGrid.innerHTML = posts.map((post) => {
+          const { title, date, summary, url, content } = post;
+          const formattedDate = formatDate(date);
+          const excerpt = summary || (content ? content.substring(0, 200) + '...' : '');
+          const link = url ? `<a class="blog-post-link" href="${url}">Read more →</a>` : '';
+          return `
+            <article class="blog-post-card">
+              <h2 class="blog-post-title">${title || 'Untitled Post'}</h2>
+              ${formattedDate ? `<p class="blog-post-date">${formattedDate}</p>` : ''}
+              ${excerpt ? `<p class="blog-post-excerpt">${excerpt}</p>` : ''}
+              ${link}
+            </article>
+          `;
+        }).join('');
+      })
+      .catch(() => {
+        blogGrid.innerHTML = '<p class="post-meta">Could not load posts. Please try again later.</p>';
+      });
+  }
+
+  // Mobile menu toggle
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if (mobileMenuToggle && navLinks) {
+    mobileMenuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('is-open');
+      mobileMenuToggle.setAttribute('aria-expanded', isOpen);
     });
   }
 })();
