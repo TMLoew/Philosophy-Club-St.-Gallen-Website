@@ -22,7 +22,7 @@
     container.innerHTML = members.map((member) => {
       const { name, initials, role, image, linkedin } = member;
       const hasPhoto = image ? ' has-photo' : '';
-      const bgStyle = image ? ` style="background-image: url('${image}');"` : '';
+      const bgStyle = image ? ` data-bg-image="${image}"` : '';
       const photoContent = `
         <div class="board-photo${hasPhoto}"${bgStyle}>
           <span class="board-initials">${initials}</span>
@@ -186,7 +186,7 @@
         const meta = [prettyDate, time, location].filter(Boolean).join(' · ');
         const link = url ? `<a class="event-link" href="${url}" target="_blank" rel="noopener noreferrer">Learn more</a>` : '';
         const desc = description ? `<p class="event-desc">${description}</p>` : '';
-        const img = image ? `<div class="event-image" style="background-image: url('${image}');" role="img" aria-label="${title} event image"></div>` : '';
+        const img = image ? `<div class="event-image" data-bg-image="${image}" role="img" aria-label="${title} event image"></div>` : '';
         const icsData = generateICS(event);
         const addToCalBtn = icsData ? `<button class="event-calendar-btn" data-ics="${encodeURIComponent(icsData)}" data-title="${title}" aria-label="Add ${title} to calendar">+ Add to Calendar</button>` : '';
         return `
@@ -417,6 +417,15 @@
         mobileMenuToggle.setAttribute('aria-expanded', 'false');
       });
     });
+
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('is-open')) {
+        navLinks.classList.remove('is-open');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenuToggle.focus();
+      }
+    });
   }
 
   // Mobile touch optimizations
@@ -450,4 +459,33 @@
       }
     });
   });
+
+  // Lazy load images with Intersection Observer for better mobile performance
+  const lazyLoadImages = () => {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const element = entry.target;
+          const bgUrl = element.dataset.bgImage;
+
+          if (bgUrl) {
+            element.style.backgroundImage = `url('${bgUrl}')`;
+            element.removeAttribute('data-bg-image');
+          }
+
+          observer.unobserve(element);
+        }
+      });
+    }, {
+      rootMargin: '50px 0px',
+      threshold: 0.01
+    });
+
+    document.querySelectorAll('[data-bg-image]').forEach(img => {
+      imageObserver.observe(img);
+    });
+  };
+
+  // Run lazy loading after DOM content is ready
+  lazyLoadImages();
 })();

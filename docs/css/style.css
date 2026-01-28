@@ -164,10 +164,34 @@ h1, h2, h3, h4 {
   border-radius: 4px;
   min-width: 44px;
   min-height: 44px;
+  transition: background 0.2s ease;
 }
 
 .mobile-menu-toggle:hover {
   background: var(--accent-soft);
+}
+
+/* Animated hamburger icon */
+.mobile-menu-toggle svg {
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu-toggle svg line {
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Transform to X when menu is open */
+.mobile-menu-toggle[aria-expanded="true"] svg line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.mobile-menu-toggle[aria-expanded="true"] svg line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle[aria-expanded="true"] svg line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 /* Hero */
@@ -368,8 +392,8 @@ h1, h2, h3, h4 {
 }
 
 .footer-icon {
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -432,6 +456,14 @@ h1, h2, h3, h4 {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: var(--accent-soft);
+  transition: background-image 0.3s ease;
+}
+
+/* Placeholder for lazy-loaded images */
+.board-photo[data-bg-image]:not([style*="background-image"]),
+.event-image[data-bg-image]:not([style*="background-image"]) {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, #e5e7eb 100%);
 }
 
 .board-photo .board-initials {
@@ -744,8 +776,10 @@ h1, h2, h3, h4 {
 }
 
 .event-calendar-btn {
-  font-size: 0.85rem;
-  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  padding: 0.65rem 1rem;
+  min-height: 44px;
+  min-width: 44px;
   background: var(--accent-soft);
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
@@ -993,10 +1027,10 @@ h1, h2, h3, h4 {
     font-size: 1rem;
   }
 
-  /* Hero section */
+  /* Hero section - reduce height on mobile for better content access */
   .hero {
-    min-height: 60vh;
-    padding: 3rem 0 2.5rem;
+    min-height: 50vh;
+    padding: 2.5rem 0 2rem;
     background-attachment: scroll;
     background-size: cover;
     background-position: center;
@@ -1038,6 +1072,11 @@ h1, h2, h3, h4 {
   .board-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 0.75rem;
+  }
+
+  /* Make board photos more square on mobile for better use of space */
+  .board-photo {
+    aspect-ratio: 1 / 1;
   }
 
   /* Buttons */
