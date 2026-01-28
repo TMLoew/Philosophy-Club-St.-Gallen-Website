@@ -212,7 +212,11 @@ p {
 .site-header.scrolled {
   background: rgba(247, 245, 240, 0.98);
   box-shadow: var(--shadow-soft);
-  border-bottom-color: var(--forest-green);
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg,
+    var(--club-blue) 0%,
+    var(--forest-green) 50%,
+    var(--sage) 100%) 1;
 }
 
 .nav {
@@ -305,7 +309,10 @@ p {
   position: relative;
   padding: 0;
   min-height: 75vh;
-  background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-accent) 100%);
+  background: linear-gradient(135deg,
+    var(--bg) 0%,
+    rgba(138, 154, 142, 0.08) 50%,
+    var(--bg-alt) 100%);
   overflow: hidden;
 }
 
@@ -346,11 +353,12 @@ p {
   font-size: clamp(3rem, 7vw, 5.5rem);
   line-height: 1.1;
   margin: 0 0 1.5rem 0;
-  color: var(--deep-blue);
+  color: var(--club-blue);
   letter-spacing: 0.06em;
   font-weight: 300;
   text-transform: uppercase;
   font-variant: small-caps;
+  text-shadow: 0 2px 8px rgba(11, 47, 94, 0.08);
 }
 
 .hero-subtitle {
@@ -368,16 +376,16 @@ p {
   justify-content: center;
   padding: 0.9rem 2rem;
   border-radius: var(--radius-small);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  border: 2px solid var(--deep-blue);
+  border: 2px solid var(--club-blue);
   box-shadow: var(--shadow-soft);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(0);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-family: "Cormorant Garamond", serif;
 }
 
 .btn:hover {
@@ -391,9 +399,9 @@ p {
 }
 
 .btn.primary {
-  background: var(--deep-blue);
+  background: var(--club-blue);
   color: #fff;
-  border-color: var(--deep-blue);
+  border-color: var(--club-blue);
 }
 
 .btn.primary:hover {
@@ -404,13 +412,13 @@ p {
 
 .btn.secondary {
   background: transparent;
-  color: var(--deep-blue);
+  color: var(--club-blue);
   border-color: var(--forest-green);
-  color: #000;
 }
 
 .btn.secondary:hover {
-  background: var(--accent-soft);
+  background: rgba(90, 112, 88, 0.08);
+  border-color: var(--club-blue);
   text-decoration: none;
 }
 
@@ -493,10 +501,10 @@ p {
 .feature-card::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  width: 60px;
-  height: 60px;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
   background: linear-gradient(135deg, var(--sage) 0%, transparent 70%);
   opacity: 0.12;
   border-radius: var(--radius-small);
@@ -513,9 +521,10 @@ p {
   margin-top: 0;
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
-  color: var(--deep-blue);
+  color: var(--club-blue);
   font-family: "Cormorant Garamond", serif;
   letter-spacing: 0.03em;
+  font-weight: 500;
 }
 
 .feature-card p {
@@ -527,9 +536,12 @@ p {
 
 /* Membership accent section */
 .section-accent {
-  background: var(--bg-accent);
-  border-top: 2px solid var(--border-medium);
-  border-bottom: 2px solid var(--border-medium);
+  background: linear-gradient(135deg,
+    var(--bg-alt) 0%,
+    rgba(138, 154, 142, 0.12) 50%,
+    var(--bg-accent) 100%);
+  border-top: 3px solid rgba(90, 112, 88, 0.2);
+  border-bottom: 3px solid rgba(90, 112, 88, 0.2);
   position: relative;
 }
 
@@ -539,9 +551,13 @@ p {
   top: 0;
   left: 0;
   width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--forest-green) 0%, var(--sage) 50%, var(--slate-blue) 100%);
-  opacity: 0.4;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--club-blue) 0%,
+    var(--forest-green) 40%,
+    var(--sage) 70%,
+    var(--slate-blue) 100%);
+  opacity: 0.6;
 }
 
 .membership-grid {
@@ -654,7 +670,8 @@ p {
 }
 
 .board-card:hover .board-photo {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 32px rgba(11, 47, 94, 0.18), 0 4px 8px rgba(11, 47, 94, 0.12);
+  border-color: rgba(90, 112, 88, 0.3);
 }
 
 .board-card h3 {
@@ -683,8 +700,9 @@ p {
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--accent-soft);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(11, 47, 94, 0.12), 0 2px 4px rgba(11, 47, 94, 0.08);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid rgba(90, 112, 88, 0.15);
 }
 
 /* Placeholder for lazy-loaded images */
@@ -942,8 +960,8 @@ p {
 
 .event-card {
   background: var(--bg);
-  border: 2px solid var(--border-subtle);
-  border-top: 3px solid var(--slate-blue);
+  border: 1.5px solid var(--border-subtle);
+  border-top: 4px solid var(--club-blue);
   border-radius: var(--radius-med);
   padding: 1.5rem;
   box-shadow: var(--shadow-soft);
@@ -971,13 +989,13 @@ p {
   transform: translateY(-5px);
   box-shadow: var(--shadow-medium);
   border-top-color: var(--forest-green);
-  border-top-width: 4px;
+  border-top-width: 5px;
 }
 
 .event-title {
   margin: 0;
   font-size: 1.15rem;
-  color: var(--deep-blue);
+  color: var(--club-blue);
   word-break: break-word;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -1218,12 +1236,22 @@ p {
 
 .blog-post-card {
   background: var(--bg);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
+  border-left: 4px solid var(--slate-blue);
   border-radius: var(--radius-large);
   padding: 1.5rem;
   display: grid;
   gap: 0.75rem;
   box-shadow: var(--shadow-soft);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+}
+
+.blog-post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-left-color: var(--club-blue);
+  border-left-width: 5px;
 }
 
 .blog-post-title {
