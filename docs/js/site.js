@@ -488,4 +488,42 @@
 
   // Run lazy loading after DOM content is ready
   lazyLoadImages();
+
+  // Scroll-triggered fade-in animations for floating aesthetic
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const fadeInObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in-visible');
+        fadeInObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Target elements for fade-in animation
+  const fadeElements = document.querySelectorAll('.feature-card, .event-card, .board-card, .section-heading, .membership-card');
+  fadeElements.forEach(el => {
+    el.classList.add('fade-in');
+    fadeInObserver.observe(el);
+  });
+
+  // Glass-morphism header effect on scroll
+  const header = document.querySelector('.site-header');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+
+    lastScroll = currentScroll;
+  }, { passive: true });
 })();
