@@ -453,20 +453,21 @@ p {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.5rem;
-  width: 6px;
-  height: 60px;
-  background: linear-gradient(180deg, var(--club-blue) 0%, var(--forest-green) 100%);
-  border-radius: 3px;
+  top: 0;
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--club-blue) 0%, var(--forest-green) 60%, var(--sage) 100%);
+  border-radius: 4px;
+  box-shadow: 2px 0 8px rgba(11, 47, 94, 0.15);
 }
 
 .section-heading h2 {
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 5.5vw, 4rem);
   margin-bottom: 0.6rem;
   color: var(--club-blue);
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-variant: small-caps;
 }
@@ -488,10 +489,10 @@ p {
 .feature-card {
   background: var(--bg-alt);
   border-radius: var(--radius-med);
-  padding: 2rem;
-  border: 1.5px solid var(--border-subtle);
-  border-left: 4px solid var(--forest-green); /* Ancient column accent */
-  box-shadow: var(--shadow-soft);
+  padding: 2rem 2rem 2rem 2.5rem;
+  border: 2px solid var(--border-medium);
+  border-left: 8px solid var(--forest-green); /* Ancient column accent */
+  box-shadow: var(--shadow-medium);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(0);
   position: relative;
@@ -503,18 +504,18 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, var(--sage) 0%, transparent 70%);
-  opacity: 0.12;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--sage) 0%, transparent 60%);
+  opacity: 0.25;
   border-radius: var(--radius-small);
 }
 
 .feature-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-medium);
-  border-left-color: var(--deep-blue);
-  border-left-width: 5px;
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(58, 90, 108, 0.18);
+  border-left-color: var(--club-blue);
+  border-left-width: 10px;
 }
 
 .feature-card h3 {
@@ -538,10 +539,10 @@ p {
 .section-accent {
   background: linear-gradient(135deg,
     var(--bg-alt) 0%,
-    rgba(138, 154, 142, 0.12) 50%,
+    rgba(138, 154, 142, 0.18) 50%,
     var(--bg-accent) 100%);
-  border-top: 3px solid rgba(90, 112, 88, 0.2);
-  border-bottom: 3px solid rgba(90, 112, 88, 0.2);
+  border-top: 5px solid var(--forest-green);
+  border-bottom: 5px solid var(--sage);
   position: relative;
 }
 
@@ -551,13 +552,13 @@ p {
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
+  height: 5px;
   background: linear-gradient(90deg,
     var(--club-blue) 0%,
     var(--forest-green) 40%,
     var(--sage) 70%,
     var(--slate-blue) 100%);
-  opacity: 0.6;
+  opacity: 0.9;
 }
 
 .membership-grid {
@@ -960,11 +961,11 @@ p {
 
 .event-card {
   background: var(--bg);
-  border: 1.5px solid var(--border-subtle);
-  border-top: 4px solid var(--club-blue);
+  border: 2px solid var(--border-medium);
+  border-top: 6px solid var(--club-blue);
   border-radius: var(--radius-med);
   padding: 1.5rem;
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-medium);
   display: grid;
   gap: 0.6rem;
   overflow: hidden;
@@ -978,18 +979,18 @@ p {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(225deg, var(--sage) 0%, transparent 60%);
-  opacity: 0.08;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(225deg, var(--sage) 0%, transparent 50%);
+  opacity: 0.2;
   border-radius: var(--radius-small);
 }
 
 .event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-medium);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(58, 90, 108, 0.18);
   border-top-color: var(--forest-green);
-  border-top-width: 5px;
+  border-top-width: 8px;
 }
 
 .event-title {
