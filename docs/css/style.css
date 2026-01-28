@@ -13,16 +13,17 @@
   --bg-accent: #e8e4dc; /* stone */
 
   /* Earthy & Blue Accents */
+  --club-blue: #0b2f5e; /* Philosophy Club signature blue - MAIN */
   --forest-green: #5a7058; /* moss */
   --sage: #8a9a8e; /* sage */
   --slate-blue: #546a7b; /* stormy blue */
-  --deep-blue: #3d5a6c; /* ocean deep */
   --clay: #8b7a6a; /* terracotta muted */
   --driftwood: #a69888; /* warm grey-brown */
 
   /* Primary accent for CTAs */
-  --accent: var(--deep-blue);
+  --accent: var(--club-blue);
   --accent-hover: var(--slate-blue);
+  --deep-blue: var(--club-blue); /* Alias for compatibility */
 
   /* Text Colors */
   --text-main: #2a2a2a; /* charcoal */
@@ -231,7 +232,7 @@ p {
   gap: 1.5rem;
   font-size: 1rem;
   letter-spacing: 0.03em;
-  color: #0b2f5e;
+  color: var(--deep-blue);
 }
 
 .nav-links a {
@@ -420,7 +421,7 @@ p {
 }
 
 .btn.ghost:hover {
-  background: #fff;
+  background: var(--bg);
 }
 
 /* Section spacing */
@@ -434,16 +435,39 @@ p {
   }
 }
 
+.section-heading {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 3rem;
+}
+
+.section-heading::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 6px;
+  height: 60px;
+  background: linear-gradient(180deg, var(--club-blue) 0%, var(--forest-green) 100%);
+  border-radius: 3px;
+}
+
 .section-heading h2 {
   font-family: "Cormorant Garamond", serif;
-  font-size: 2rem;
-  margin-bottom: 0.4rem;
-  color: #000;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  margin-bottom: 0.6rem;
+  color: var(--club-blue);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-variant: small-caps;
 }
 
 .section-heading p {
   color: var(--text-muted);
   margin: 0;
+  font-size: 1.1rem;
+  font-style: italic;
 }
 
 /* Feature cards */
@@ -503,9 +527,21 @@ p {
 
 /* Membership accent section */
 .section-accent {
-  background: #fff;
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-accent);
+  border-top: 2px solid var(--border-medium);
+  border-bottom: 2px solid var(--border-medium);
+  position: relative;
+}
+
+.section-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--forest-green) 0%, var(--sage) 50%, var(--slate-blue) 100%);
+  opacity: 0.4;
 }
 
 .membership-grid {
@@ -708,7 +744,7 @@ p {
 .board-accordion details {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-med);
-  background: #fff;
+  background: var(--bg);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
   overflow: hidden;
 }
@@ -754,7 +790,7 @@ p {
 }
 
 .ig-card {
-  background: #fff;
+  background: var(--bg);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-med);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07);
@@ -797,7 +833,7 @@ p {
 
 .current-events__label {
   margin: 0 0 0.8rem;
-  color: #0b2f5e;
+  color: var(--deep-blue);
   font-weight: 600;
   text-align: center;
 }
@@ -864,7 +900,29 @@ p {
 
 /* Events */
 .events-section {
-  padding: 3rem 0;
+  padding: 5rem 0;
+  position: relative;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 50%, var(--bg) 100%);
+}
+
+/* Large decorative circle */
+.events-section::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -80px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--sage) 0%, transparent 70%);
+  opacity: 0.15;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.events-section > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .events-header {
@@ -975,7 +1033,7 @@ p {
   border-radius: var(--radius-med);
   font: inherit;
   color: #000;
-  background: #fff;
+  background: var(--bg);
 }
 
 .event-search:focus {
@@ -1011,9 +1069,20 @@ p {
 
 /* Posts */
 .posts-section {
-  background: #f7f9fc;
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-alt);
+  border-top: 3px solid var(--sage);
+  border-bottom: 3px solid var(--sage);
+  position: relative;
+}
+
+.posts-section::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  right: 5%;
+  width: 120px;
+  height: 3px;
+  background: var(--forest-green);
 }
 
 .posts-header {
@@ -1037,7 +1106,7 @@ p {
 }
 
 .post-card {
-  background: #fff;
+  background: var(--bg);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-med);
   padding: 1rem;
@@ -1097,7 +1166,7 @@ p {
   border-radius: var(--radius-med);
   font: inherit;
   color: #000;
-  background: #fff;
+  background: var(--bg);
 }
 
 .form-field input:focus,
@@ -1148,7 +1217,7 @@ p {
 }
 
 .blog-post-card {
-  background: #fff;
+  background: var(--bg);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-large);
   padding: 1.5rem;
