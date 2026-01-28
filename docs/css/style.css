@@ -35,9 +35,9 @@
   --border-medium: #d0cbc0;
   --border-accent: var(--forest-green);
 
-  /* Shadows - natural, soft */
-  --shadow-soft: 0 4px 16px rgba(58, 90, 108, 0.08);
-  --shadow-medium: 0 8px 24px rgba(58, 90, 108, 0.12);
+  /* Shadows - flat design */
+  --shadow-soft: none;
+  --shadow-medium: none;
 
   /* Radius - organic */
   --radius-large: 1.5rem;
@@ -209,7 +209,6 @@ p {
 
 .site-header.scrolled {
   background: #fff;
-  box-shadow: var(--shadow-soft);
   border-bottom: 1px solid var(--border-medium);
 }
 
@@ -356,8 +355,6 @@ p {
   font-weight: 400;
   text-transform: uppercase;
   font-variant: small-caps;
-  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9),
-               0 4px 16px rgba(255, 255, 255, 0.7);
 }
 
 .hero-subtitle {
@@ -379,22 +376,18 @@ p {
   font-weight: 500;
   cursor: pointer;
   border: 2px solid var(--club-blue);
-  box-shadow: var(--shadow-soft);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-family: "Cormorant Garamond", serif;
 }
 
 .btn:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-medium);
+  opacity: 0.9;
 }
 
 .btn:active {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-soft);
+  opacity: 0.8;
 }
 
 .btn.primary {
@@ -457,7 +450,6 @@ p {
   height: 100%;
   background: linear-gradient(180deg, var(--club-blue) 0%, var(--forest-green) 60%, var(--sage) 100%);
   border-radius: 4px;
-  box-shadow: 2px 0 8px rgba(11, 47, 94, 0.15);
 }
 
 .section-heading h2 {
@@ -491,9 +483,7 @@ p {
   padding: 2rem 2rem 2rem 2.5rem;
   border: 2px solid var(--border-medium);
   border-left: 8px solid var(--forest-green); /* Ancient column accent */
-  box-shadow: var(--shadow-medium);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0);
   position: relative;
   overflow: hidden;
 }
@@ -511,8 +501,6 @@ p {
 }
 
 .feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 40px rgba(58, 90, 108, 0.18);
   border-left-color: var(--club-blue);
   border-left-width: 10px;
 }
@@ -670,7 +658,6 @@ p {
 }
 
 .board-card:hover .board-photo {
-  box-shadow: 0 12px 32px rgba(11, 47, 94, 0.18), 0 4px 8px rgba(11, 47, 94, 0.12);
   border-color: rgba(90, 112, 88, 0.3);
 }
 
@@ -700,7 +687,6 @@ p {
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--accent-soft);
-  box-shadow: 0 4px 12px rgba(11, 47, 94, 0.12), 0 2px 4px rgba(11, 47, 94, 0.08);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid rgba(90, 112, 88, 0.15);
 }
@@ -964,12 +950,10 @@ p {
   border-top: 6px solid var(--club-blue);
   border-radius: var(--radius-med);
   padding: 1.5rem;
-  box-shadow: var(--shadow-medium);
   display: grid;
   gap: 0.6rem;
   overflow: hidden;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0);
   position: relative;
 }
 
@@ -986,8 +970,6 @@ p {
 }
 
 .event-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(58, 90, 108, 0.18);
   border-top-color: var(--forest-green);
   border-top-width: 8px;
 }
